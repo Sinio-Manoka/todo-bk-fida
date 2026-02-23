@@ -30,6 +30,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
     implementation("org.owasp.encoder:encoder:1.3.1")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
+
 }
 
 tasks.withType<Test> {
