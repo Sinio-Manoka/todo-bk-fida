@@ -1,0 +1,190 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > TodoController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.todo.app.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: TodoController (com.todo.app.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TodoController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (22/22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.todo.app.controller;
+&nbsp;
+&nbsp;import com.todo.app.model.TodoItem;
+&nbsp;import com.todo.app.service.TodoService;
+&nbsp;import jakarta.validation.Valid;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import org.owasp.encoder.Encode;
+&nbsp;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/api/todos&quot;)
+&nbsp;public class TodoController {
+&nbsp;    private final TodoService todoService;
+&nbsp;
+<b class="fc">&nbsp;    public TodoController(TodoService todoService) {</b>
+<b class="fc">&nbsp;        this.todoService = todoService;</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @GetMapping
+&nbsp;    public List&lt;TodoItem&gt; getAllTodoItems() {
+<b class="fc">&nbsp;        return todoService.getAllTodoItems();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;TodoItem&gt; getTodoItemById(@PathVariable String id) {
+<b class="fc">&nbsp;        return todoService.getTodoItemById(id)</b>
+<b class="fc">&nbsp;                .map(ResponseEntity::ok)</b>
+<b class="fc">&nbsp;                .orElse(ResponseEntity.notFound().build());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping
+&nbsp;    public ResponseEntity&lt;TodoItem&gt; createTodoItem(@Valid @RequestBody TodoItem todoItem) {
+<b class="fc">&nbsp;        todoItem.setTitle(Encode.forHtml(todoItem.getTitle()));</b>
+<b class="fc">&nbsp;        todoItem.setDescription(Encode.forHtml(todoItem.getDescription()));</b>
+<b class="fc">&nbsp;        TodoItem created = todoService.createTodo(todoItem);</b>
+<b class="fc">&nbsp;        return ResponseEntity.status(HttpStatus.CREATED).body(created);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; deleteTodoItem(@PathVariable String id) {
+<b class="fc">&nbsp;        if (todoService.deleteTodoItem(id)) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.noContent().build();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return ResponseEntity.notFound().build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;TodoItem&gt; updateTodoItem(@PathVariable String id, @Valid @RequestBody TodoItem updatedItem) {
+<b class="fc">&nbsp;        TodoItem updated = todoService.updateTodoItem(id, updatedItem);</b>
+<b class="fc">&nbsp;        if (updated != null) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(updated);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return ResponseEntity.notFound().build();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/count&quot;)
+&nbsp;    public ResponseEntity&lt;Integer&gt; countTodoItems() {
+<b class="fc">&nbsp;        int count = todoService.count();</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(count);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/clear&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; clearAllTodoItems() {
+<b class="fc">&nbsp;        todoService.clearAll();</b>
+<b class="fc">&nbsp;        return ResponseEntity.noContent().build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-02-23 11:37</div>
+</div>
+</body>
+</html>
