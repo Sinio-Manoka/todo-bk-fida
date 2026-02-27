@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -21,6 +22,7 @@ public class TodoRepository {
     }
 
     public TodoItem save(TodoItem item) {
+        item.setId(UUID.randomUUID().toString());
         todoItems.put(item.getId(), item);
         return item;
     }
